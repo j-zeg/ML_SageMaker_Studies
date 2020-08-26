@@ -6,7 +6,9 @@ import pandas as pd
 
 from sklearn.externals import joblib
 
+
 ## TODO: Import any additional libraries you need to define a model
+from sklearn.svm import SVC
 
 
 # Provided model load function
@@ -39,6 +41,11 @@ if __name__ == '__main__':
     parser.add_argument('--data-dir', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     
     ## TODO: Add any additional arguments that you will need to pass into your model
+    parser.add_argument('--C', type=int, default=1, metavar='C',
+                        help='regularization parameter (default: 1)')
+    parser.add_argument('--gamma', type=str or float, default='scale', metavar='gamma',
+                        help="rbf kernel coefficient (default: 'scale')")
+
     
     # args holds all passed-in arguments
     args = parser.parse_args()
@@ -54,13 +61,13 @@ if __name__ == '__main__':
     
     ## --- Your code here --- ##
     
-
+    
     ## TODO: Define a model 
-    model = None
-    
-    
+    model = SVC(C=args.C, gamma=args.gamma)
+
+
     ## TODO: Train the model
-    
+    model.fit(train_x, train_y)
     
     
     ## --- End of your code  --- ##
